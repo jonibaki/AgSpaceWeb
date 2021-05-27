@@ -12,7 +12,7 @@ namespace AgSpaceWeb
             WebDriver = wd;
         }
 
-        public void clickInnovationMenu(IWebElement we) {
+        public void clickNavMenu(IWebElement we) {
             we.Click();
         }
         public string getTitle() {

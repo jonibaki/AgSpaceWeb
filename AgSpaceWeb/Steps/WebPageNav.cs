@@ -25,7 +25,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheInnovation()
         {
             IWebElement navInnovation  = webDriver.FindElement(By.Id("menu-item-28"));
-            home.clickInnovationMenu(navInnovation);
+            home.clickNavMenu(navInnovation);
         }
 
 
@@ -48,7 +48,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheBigData()
         {
             IWebElement navBigData = webDriver.FindElement(By.Id("menu-item-31"));
-            home.clickInnovationMenu(navBigData);
+            home.clickNavMenu(navBigData);
         }
 
         [Then(@"I land on Big Data page")]
@@ -71,7 +71,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheEarthObservation()
         {
             IWebElement navObservation = webDriver.FindElement(By.Id("menu-item-34"));
-            home.clickInnovationMenu(navObservation);
+            home.clickNavMenu(navObservation);
         }
 
         [Then(@"I land on Earth Observation  page")]
@@ -96,7 +96,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheContour()
         {
             IWebElement navContour = webDriver.FindElement(By.Id("menu-item-37"));
-            home.clickInnovationMenu(navContour);
+            home.clickNavMenu(navContour);
         }
 
         [Then(@"I land on Contour page")]
@@ -119,7 +119,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheGrid()
         {
             IWebElement navGrid = webDriver.FindElement(By.Id("menu-item-40"));
-            home.clickInnovationMenu(navGrid);
+            home.clickNavMenu(navGrid);
         }
 
         [Then(@"I land on Grid page")]
@@ -145,7 +145,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheWhatSNew()
         {
             IWebElement navWhatsNew = webDriver.FindElement(By.Id("menu-item-120"));
-            home.clickInnovationMenu(navWhatsNew);
+            home.clickNavMenu(navWhatsNew);
         }
 
         [Then(@"I land on What's New page")]
@@ -168,7 +168,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickTheContact()
         {
             IWebElement navContact = webDriver.FindElement(By.Id("menu-item-43"));
-            home.clickInnovationMenu(navContact);
+            home.clickNavMenu(navContact);
         }
 
         [Then(@"I land on Contact page")]
@@ -179,14 +179,13 @@ namespace AgSpaceWeb.Steps
         }
 
 
-
-
         [AfterScenario]
-        public void closeDrive() {
+        public void closeDrive()
+        {
 
             webDriver.Close();
         }
-        
+
 
 
     }
