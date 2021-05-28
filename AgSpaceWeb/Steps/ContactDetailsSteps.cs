@@ -15,10 +15,6 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse agSpace web page")]
         public void GivenIBrowseAgSpaceWebPage()
         {
-/*            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);*/
             home = AgSpaceHooks.home;
             webDriver = AgSpaceHooks.webDriver;
         }
@@ -55,12 +51,6 @@ namespace AgSpaceWeb.Steps
             Assert.AreEqual(number, callAgSpace);
             Assert.AreEqual(email, emailAgSpace);
         }
-
-/*        [AfterScenario]
-        public void closeDrive()
-        {
-            webDriver.Quit();
-        }*/
 
     }
 }
