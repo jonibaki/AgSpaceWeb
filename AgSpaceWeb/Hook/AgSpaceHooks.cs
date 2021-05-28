@@ -14,21 +14,19 @@ namespace AgSpaceWeb.Hook
         public static HomePage home = null;
         public static IWebDriver webDriver = null;
 
-        [BeforeFeature]
+        [BeforeScenario]
         public static void BeforeScenario()
         {
-            /*            webDriver = new ChromeDriver();
-                        webDriver.Navigate().GoToUrl("https://ag-space.com/");
-                        webDriver.Manage().Window.Maximize();
-                        home = new HomePage(webDriver);*/
-            Console.WriteLine("Before");
+            webDriver = new ChromeDriver();
+            webDriver.Navigate().GoToUrl("https://ag-space.com/");
+            webDriver.Manage().Window.Maximize();
+            home = new HomePage(webDriver);
         }
 
-        [AfterFeature]
+        [AfterScenario]
         public static void AfterScenario()
         {
-            Console.WriteLine("After");
-            /*            webDriver.Quit();*/
+            webDriver.Quit();
         }
     }
 }

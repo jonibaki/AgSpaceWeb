@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using AgSpaceWeb.Hook;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -15,10 +16,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for Innovation")]
         public void GivenIBrowseTheAgSpaceWebsiteForInnovation()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [When(@"I click the Innovation")]
@@ -39,10 +38,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for Big Data")]
         public void GivenIBrowseTheAgSpaceWebsiteForBigData()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
         [When(@"I click the Big Data")]
         public void WhenIClickTheBigData()
@@ -61,10 +58,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for Observation")]
         public void GivenIBrowseTheAgSpaceWebsiteForObservation()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [When(@"I click the Earth Observation")]
@@ -84,10 +79,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for Contour")]
         public void GivenIBrowseTheAgSpaceWebsiteForContour()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
 
@@ -109,10 +102,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for Grid")]
         public void GivenIBrowseTheAgSpaceWebsiteForGrid()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [When(@"I click the Grid")]
@@ -135,10 +126,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for What's New")]
         public void GivenIBrowseTheAgSpaceWebsiteForWhatSNew()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [When(@"I click the What's New")]
@@ -158,10 +147,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse the agSpace website for Contact")]
         public void GivenIBrowseTheAgSpaceWebsiteForContact()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com/");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [When(@"I click the Contact")]
@@ -177,16 +164,6 @@ namespace AgSpaceWeb.Steps
             string title = home.getTitle();
             Assert.AreEqual(title, "Contact - AgSpace");
         }
-
-
-/*        [AfterScenario]
-        public void closeDrive()
-        {
-
-            webDriver.Quit();
-        }
-*/
-
 
     }
 }

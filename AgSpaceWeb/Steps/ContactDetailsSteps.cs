@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using AgSpaceWeb.Hook;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace AgSpaceWeb.Steps
         [Given(@"I browse agSpace web page")]
         public void GivenIBrowseAgSpaceWebPage()
         {
-            webDriver = new ChromeDriver();
+/*            webDriver = new ChromeDriver();
             webDriver.Navigate().GoToUrl("https://ag-space.com/");
             webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = new HomePage(webDriver);*/
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
         
         [When(@"I click contact from nav menu")]

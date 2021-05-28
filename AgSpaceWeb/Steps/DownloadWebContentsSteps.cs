@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using System;
 using TechTalk.SpecFlow;
+using AgSpaceWeb.Hook;
 
 namespace AgSpaceWeb.Steps
 {
@@ -16,10 +17,8 @@ namespace AgSpaceWeb.Steps
         [Given(@"I go to agSpace website")]
         public void GivenIGoToAgSpaceWebsite()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [Given(@"I navigate to Contour page")]
@@ -67,14 +66,8 @@ namespace AgSpaceWeb.Steps
         [Then(@"I download the Grid contents")]
         public void ThenIDownloadTheGridContents()
         {
+            //Todo: check for external link on Apps Store /Play Store 
             Console.WriteLine(webDriver.Title);
         }
-
-/*
-        [AfterScenario]
-        public void closeDrive()
-        {
-            webDriver.Quit();
-        }*/
     }
 }
