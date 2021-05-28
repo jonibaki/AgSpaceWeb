@@ -183,7 +183,7 @@ namespace AgSpaceWeb.Steps
         public void closeDrive()
         {
 
-            webDriver.Close();
+            webDriver.Quit();
         }
 */
 

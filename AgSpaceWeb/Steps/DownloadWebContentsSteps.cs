@@ -70,11 +70,11 @@ namespace AgSpaceWeb.Steps
             Console.WriteLine(webDriver.Title);
         }
 
-
+/*
         [AfterScenario]
         public void closeDrive()
         {
-            webDriver.Close();
-        }
+            webDriver.Quit();
+        }*/
     }
 }

@@ -52,11 +52,11 @@ namespace AgSpaceWeb.Steps
             Assert.AreEqual(number, callAgSpace);
             Assert.AreEqual(email, emailAgSpace);
         }
-/*
-        [AfterScenario]
+
+/*        [AfterScenario]
         public void closeDrive()
         {
-            webDriver.Close();
+            webDriver.Quit();
         }*/
 
     }
