@@ -4,6 +4,10 @@ using System;
 using TechTalk.SpecFlow;
 using AgSpaceWeb.Hook;
 
+
+/*
+    INCOMPLETE STEPS 'THEN'
+ */
 namespace AgSpaceWeb.Steps
 {
     [Binding]
@@ -37,16 +41,15 @@ namespace AgSpaceWeb.Steps
         [Then(@"I download the Contour contents")]
         public void ThenIDownloadTheContourContents()
         {
+            //Todo: check for external link on Apps Store /Play Store 
             Console.WriteLine(webDriver.Title);
         }
 
         [Given(@"I browse agSpace web site")]
         public void GivenIBrowseAgSpaceWebSite()
         {
-            webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://ag-space.com");
-            webDriver.Manage().Window.Maximize();
-            home = new HomePage(webDriver);
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
         }
 
         [Given(@"I navigate to Grid page")]

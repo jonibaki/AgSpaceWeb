@@ -2,10 +2,15 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using TechTalk.SpecFlow;
 
+/*
+    INCOMPLETE STEPS
+ */
 namespace AgSpaceWeb.Steps
 {
     [Binding]
@@ -14,34 +19,33 @@ namespace AgSpaceWeb.Steps
         HomePage home = null;
         IWebDriver webDriver = null;
 
-        private IList<IWebElement> GetAllCheckListItems(string filterName) {
-            IList<IWebElement> filterItems = webDriver.FindElements(By.CssSelector("form#search-filter-form-167.searchandfilter>ul>li"));
-            Console.WriteLine(filterItems.Count);
+        private IList<IWebElement> GetAllCheckListItems( string filterHeaderName) {
+               IList<IWebElement> filterItems = webDriver.FindElements(By.CssSelector("form#search-filter-form-167.searchandfilter>ul>li"));
 
             IList<IWebElement> filtered = null;
 
+            int counter = 1;
             foreach (IWebElement we in filterItems)
             {
-                Console.WriteLine(we);
-                /*   string name = we.FindElement(By.TagName("h4").Text;*/
-                /*  if (true){
-                      // put inner list in a different list
-                      break;
-                  }*/
-                //then in a loop pick individual item and assert it with different parameters
-                switch (filterName) {
-                    case "Product":
-                        //inner loop and add and break;
+
+                if (counter != 1)
+                {
+                    string value = String.Format($"//*[@id=\"search-filter-form-167\"]/ul/li[{counter}]/h4");
+                    string product = we.FindElement(By.XPath(value)).Text;
+                    if (product == filterHeaderName)
+                    {
+
+                        filtered = we.FindElements(By.ClassName("sf-input-checkbox"));
                         break;
-                    case "Market":
-                        //inner loop and add and break;
-                        break;
-                    case "communication":
-                        //inner loop and add and break;
-                        break;
+                    }
 
                 }
+                counter++;
             }
+
+
+
+
             return filtered;
 
 
@@ -73,56 +77,51 @@ namespace AgSpaceWeb.Steps
         [When(@"I toggle on only product")]
         public void WhenIToggleOnOnlyProduct()
         {
-            IList<IWebElement> filterItems = webDriver.FindElements(By.CssSelector("form#search-filter-form-167.searchandfilter>ul>li"));
+            IList<IWebElement> filtered = GetAllCheckListItems("Product");
 
-            IList<IWebElement> filtered = null;
-
-            int counter = 1;
-            foreach (IWebElement we in filterItems)
-            {
-               
-                if (counter != 1) {
-                    string value = String.Format($"//*[@id=\"search-filter-form-167\"]/ul/li[{counter}]/h4");
-                    string product = we.FindElement(By.XPath(value)).Text;
-                    if (product == "Product")
-                    {
-                        // put inner list in a different list
-                        filtered = we.FindElements(By.ClassName("sf-input-checkbox"));
-                        break;
-                    }
-
-                }
-                counter++;
-            }
-
-/*            foreach (IWebElement w in filtered)
+            foreach (IWebElement w in filtered)
             {
                 if (!w.Selected)
                 {
                     w.Click();
                 }
-            }*/
-
-
+            }
+            Thread.Sleep(500);
 
         }
 
         [Then(@"I filtered product related articles")]
-        [Obsolete]
         public void ThenIFilteredProductRelatedArticles()
         {
-            //IWebElement aCardContainer = webDriver.FindElement(By.ClassName("uk-width-2-3@m uk-grid-margin uk-first-column"));
-            IWebElement aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]"));
-            //IWebElement aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]/div[1]"));
-            //webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            IList <IWebElement> resultCards = aCardContainer.FindElements(By.ClassName("uk-first-column"));
-
-            // loop all the cards and call boolean func and check the assertion for all the criteria
-            Console.WriteLine(resultCards.Count);
-            foreach (IWebElement el in resultCards) {
-                Console.WriteLine(el);  
+      
+            IList<IWebElement> resultCards = null;
+            IWebElement aCardContainer = null;
+            try
+            {
+                aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]/div[1]"));
+                resultCards = aCardContainer.FindElements(By.XPath("./*"));
             }
-            Console.WriteLine(resultCards.Count);
+            catch (Exception ex)
+            {
+                aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]/div[1]"));
+                resultCards = aCardContainer.FindElements(By.XPath("./*"));
+            }
+
+            if (resultCards.Count != 0) {
+                foreach (IWebElement el in resultCards)
+                {
+                    
+                    Console.WriteLine(el.FindElement(By.TagName("a")).Text);
+                }
+
+            }
+
+            //assert against img name
+            //assert aginast card title
+            
+            //Dummy Assertion
+            Assert.AreEqual(0, resultCards.Count);
+   
 
         }
 
@@ -175,12 +174,6 @@ namespace AgSpaceWeb.Steps
         {
             
         }
-/*        [AfterScenario]
-        public void closeDrive()
-        {
-
-            webDriver.Quit();
-        }*/
 
     }
 }
