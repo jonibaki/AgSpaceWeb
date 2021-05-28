@@ -24,7 +24,7 @@ namespace AgSpaceWeb.Steps
         public void WhenIClickContactFromNavMenu()
         {
             IWebElement navContact = webDriver.FindElement(By.Id("menu-item-43"));
-            home.clickNavMenu(navContact);
+            home.ClickNavMenu(navContact);
         }
         
         [Then(@"Verify contact (.*) and (.*) details")]
@@ -52,12 +52,12 @@ namespace AgSpaceWeb.Steps
             Assert.AreEqual(number, callAgSpace);
             Assert.AreEqual(email, emailAgSpace);
         }
-
+/*
         [AfterScenario]
         public void closeDrive()
         {
             webDriver.Close();
-        }
+        }*/
 
     }
 }
