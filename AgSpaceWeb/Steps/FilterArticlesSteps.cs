@@ -1,16 +1,12 @@
 ﻿using AgSpaceWeb.Hook;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using TechTalk.SpecFlow;
 
-/*
-    INCOMPLETE STEPS
- */
+
 namespace AgSpaceWeb.Steps
 {
     [Binding]
@@ -20,7 +16,7 @@ namespace AgSpaceWeb.Steps
         IWebDriver webDriver = null;
 
         private IList<IWebElement> GetAllCheckListItems( string filterHeaderName) {
-               IList<IWebElement> filterItems = webDriver.FindElements(By.CssSelector("form#search-filter-form-167.searchandfilter>ul>li"));
+              IList<IWebElement> filterItems = webDriver.FindElements(By.CssSelector("form#search-filter-form-167.searchandfilter>ul>li"));
 
             IList<IWebElement> filtered = null;
 
@@ -32,9 +28,10 @@ namespace AgSpaceWeb.Steps
                 {
                     string value = String.Format($"//*[@id=\"search-filter-form-167\"]/ul/li[{counter}]/h4");
                     string product = we.FindElement(By.XPath(value)).Text;
+                    Console.WriteLine(product);
+
                     if (product == filterHeaderName)
                     {
-
                         filtered = we.FindElements(By.ClassName("sf-input-checkbox"));
                         break;
                     }
@@ -42,10 +39,6 @@ namespace AgSpaceWeb.Steps
                 }
                 counter++;
             }
-
-
-
-
             return filtered;
 
 
@@ -74,31 +67,34 @@ namespace AgSpaceWeb.Steps
         }
 
 
-        [When(@"I toggle on only product")]
-        public void WhenIToggleOnOnlyProduct()
+        [When(@"I toggle on only Product (.*)")]
+        public void WhenIToggleOnOnlyProduct(int p0)
         {
             IList<IWebElement> filtered = GetAllCheckListItems("Product");
 
-            foreach (IWebElement w in filtered)
-            {
-                if (!w.Selected)
-                {
-                    w.Click();
+            for (int i = 0; i < filtered.Count; i++) {
+                if (i == p0) {
+                    filtered[i].Click();
+                    break;
                 }
+            
             }
-            Thread.Sleep(500);
+
+            Thread.Sleep(1000);
 
         }
 
-        [Then(@"I filtered product related articles")]
-        public void ThenIFilteredProductRelatedArticles()
+
+        [Then(@"I filtered product related articles with '(.*)' and '(.*)'")]
+        public void ThenIFilteredProductRelatedArticlesWithAnd(string pName, string pImgName)
         {
-      
+
             IList<IWebElement> resultCards = null;
             IWebElement aCardContainer = null;
             try
             {
                 aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]/div[1]"));
+                ((IJavaScriptExecutor)webDriver).ExecuteScript("window.scrollTo(0, document.body.scrollHeight - 150)");
                 resultCards = aCardContainer.FindElements(By.XPath("./*"));
             }
             catch (Exception ex)
@@ -107,73 +103,132 @@ namespace AgSpaceWeb.Steps
                 resultCards = aCardContainer.FindElements(By.XPath("./*"));
             }
 
-            if (resultCards.Count != 0) {
+            Thread.Sleep(600);
+            Console.WriteLine(resultCards.Count);
+            if (resultCards.Count != 0)
+            {
                 foreach (IWebElement el in resultCards)
                 {
-                    
-                    Console.WriteLine(el.FindElement(By.TagName("a")).Text);
+                    webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                    string title = el.FindElement(By.ClassName("text-block")).Text;
+                    string[] imgPath = el.FindElement(By.XPath("//span[@class='source']")).FindElement(By.TagName("img")).GetAttribute("src").Split("/");
+                
+                    Assert.AreEqual(true, title.Contains(pName) || imgPath[imgPath.Length - 1].Contains(pImgName));
+                }
+            }
+            else
+            {
+                Assert.AreEqual(0, resultCards.Count);
+            }
+        }
+
+        [Given(@"I refresh AgSpace website")]
+        public void GivenIRefreshAgSpaceWebsite()
+        {
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
+        }
+
+        [Given(@"I navigate to What's New page")]
+        public void GivenINavigateToWhatSNewPage()
+        {
+            IWebElement navWhatsNew = webDriver.FindElement(By.Id("menu-item-120"));
+            home.ClickNavMenu(navWhatsNew);
+        }
+
+        [When(@"I toggle on only Market (.*)")]
+        public void WhenIToggleOnOnlyMarket(int p0)
+        {
+            IList<IWebElement> filtered = GetAllCheckListItems("Market");
+            for (int i = 0; i < filtered.Count; i++)
+            {
+                if (i == p0)
+                {
+                    filtered[i].Click();
+                    break;
                 }
 
             }
 
-            //assert against img name
-            //assert aginast card title
-            
-            //Dummy Assertion
-            Assert.AreEqual(0, resultCards.Count);
-   
-
+            Thread.Sleep(1000);
         }
 
-        [When(@"I toggle on only market")]
-        public void WhenIToggleOnOnlyMarket()
+        [Then(@"I filtered Market related articles with '(.*)'")]
+        public void ThenIFilteredMarketRelatedArticlesWith(string tagName)
         {
-           
-        }
-        
-        [When(@"I toogle on only communication")]
-        public void WhenIToogleOnOnlyCommunication()
-        {
-       
-        }
-        
-        [When(@"I toogle on only date range")]
-        public void WhenIToogleOnOnlyDateRange()
-        {
-           
-        }
-        
-        [When(@"I toogle on multiple categories")]
-        public void WhenIToogleOnMultipleCategories()
-        {
-           
-        }
-        
-
-        
-        [Then(@"I filtered market related articles")]
-        public void ThenIFilteredMarketRelatedArticles()
-        {
-           
-        }
-        
-        [Then(@"I filtered communication related articles")]
-        public void ThenIFilteredCommunicationRelatedArticles()
-        {
-         
-        }
-        
-        [Then(@"I filtered date range related article")]
-        public void ThenIFilteredDateRangeRelatedArticle()
-        {
-          
-        }
-        
-        [Then(@"I filtered multiple categories related articles")]
-        public void ThenIFilteredMultipleCategoriesRelatedArticles()
-        {
-            
+            string className = "\'tags\'";
+            checkForOutputAssertion(className, tagName);
         }
 
+
+        [Given(@"I land AgSpace website")]
+        public void GivenILandAgSpaceWebsite()
+        {
+            home = AgSpaceHooks.home;
+            webDriver = AgSpaceHooks.webDriver;
+        }
+
+        [Given(@"I click to What's New page")]
+        public void GivenIClickToWhatSNewPage()
+        {
+            IWebElement navWhatsNew = webDriver.FindElement(By.Id("menu-item-120"));
+            home.ClickNavMenu(navWhatsNew);
+        }
+
+        [When(@"I toggle on only Communication (.*)")]
+        public void WhenIToggleOnOnlyCommunication(int p0)
+        {
+            IList<IWebElement> filtered = GetAllCheckListItems("Type of communication");
+            for (int i = 0; i < filtered.Count; i++)
+            {
+                if (i == p0)
+                {
+                    filtered[i].Click();
+                    break;
+                }
+
+            }
+
+            Thread.Sleep(1000);
+        }
+
+        [Then(@"I filtered Communication related articles with '(.*)'")]
+        public void ThenIFilteredCommunicationRelatedArticlesWith(string comCategory)
+        {
+            string className = "\'category\'";
+            checkForOutputAssertion(className, comCategory);
+
+        }
+        public void checkForOutputAssertion(string clsName, string checkBoxName) {
+            IList<IWebElement> resultCards = null;
+            IWebElement aCardContainer = null;
+            try
+            {
+                aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]/div[1]"));
+                ((IJavaScriptExecutor)webDriver).ExecuteScript("window.scrollTo(0, document.body.scrollHeight - 150)");
+                resultCards = aCardContainer.FindElements(By.XPath("./*"));
+            }
+            catch (Exception ex)
+            {
+                aCardContainer = webDriver.FindElement(By.XPath("//*[@id=\"main\"]/section[2]/div/div/div[2]/div[1]"));
+                resultCards = aCardContainer.FindElements(By.XPath("./*"));
+            }
+
+            Thread.Sleep(600);
+            if (resultCards.Count != 0)
+            {
+                foreach (IWebElement el in resultCards)
+                {
+                    webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                    string xPathStr = String.Format($"//span[@class={clsName}]");
+                    string strValue = el.FindElement(By.XPath(xPathStr)).Text;
+                    Assert.AreEqual(true, strValue.Equals(checkBoxName));
+                }
+            }
+            else
+            {
+                Assert.AreEqual(0, resultCards.Count);
+            }
+        }
     }
 }
