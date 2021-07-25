@@ -153,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("MarketId", marketId);
             argumentsOfScenario.Add("MarketName", marketName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check Market Filters Funtionality", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 34
+#line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -173,16 +173,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 35
+#line 22
  testRunner.Given("I refresh AgSpace website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 36
+#line 23
  testRunner.And("I navigate to What\'s New page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 25
  testRunner.When(string.Format("I toggle on only Market {0}", marketId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 39
+#line 26
  testRunner.Then(string.Format("I filtered Market related articles with \'{0}\'", marketName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -210,7 +210,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("CommunicationId", communicationId);
             argumentsOfScenario.Add("CommunicationName", communicationName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check Communication Filters Funtionality", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 48
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -230,16 +230,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 49
+#line 36
  testRunner.Given("I land AgSpace website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 50
+#line 37
  testRunner.And("I click to What\'s New page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 52
+#line 39
  testRunner.When(string.Format("I toggle on only Communication {0}", communicationId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 53
+#line 40
  testRunner.Then(string.Format("I filtered Communication related articles with \'{0}\'", communicationName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
